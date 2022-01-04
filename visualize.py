@@ -1,7 +1,7 @@
 import open3d as o3d
 import numpy as np
 
-def show_point_cloud(fname):
+def show_point_cloud(fname: str):
     print("Load a xyz point cloud and render it")
     point_cloud = np.loadtxt(fname, skiprows=1)
     pcd = o3d.geometry.PointCloud()

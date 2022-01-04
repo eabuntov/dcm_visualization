@@ -1,7 +1,7 @@
 import pydicom
 import multitasking
 
-def import_dcm(fname):
+def import_dcm(fname: str):
 # load the DICOM file
     print('loading ' + fname)
     dcmfile = pydicom.dcmread(fname)

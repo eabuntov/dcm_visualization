@@ -1,7 +1,9 @@
 from multiprocessing import Process, Manager
 import multiprocessing
+import numpy
 
-def process_3Dimage_single(image3D, img_shape):
+
+def process_3Dimage_single(image3D: numpy.ndarray, img_shape: list) -> dict:
     channels = {}
     for i in range(img_shape[0]):
         print(i)
@@ -15,7 +17,7 @@ def process_3Dimage_single(image3D, img_shape):
                         channels[value] = []
     return channels
 
-def is_boundary(array, arr_shape, x, y, z):
+def is_boundary(array: numpy.ndarray, arr_shape: list, x: int, y: int, z: int) -> bool:
     value = array[x, y, z]
     if x * y * z == 0 or x == arr_shape[0] - 1 or y == arr_shape[1] - 1 or z == arr_shape[2] - 1:
         return True
@@ -29,7 +31,7 @@ def is_boundary(array, arr_shape, x, y, z):
         return False
     return True
 
-def process_3Dimage_multi(image3D, img_shape):
+def process_3Dimage_multi(image3D: numpy.ndarray, img_shape: list):
     process_count = multiprocessing.cpu_count()
     print("processing in " + str(process_count) + "processes")
     with Manager() as manager:
@@ -44,7 +46,7 @@ def process_3Dimage_multi(image3D, img_shape):
             process.join()
         return d
 
-def perform_calc(img_shape, image3D, channels, zmin, zmax):
+def perform_calc(img_shape: list, image3D: list, channels: dict, zmin: int, zmax: int):
     print(zmin, zmax)
     for i in range(zmin, zmax):
         if i >= img_shape[0]:
@@ -60,7 +62,7 @@ def perform_calc(img_shape, image3D, channels, zmin, zmax):
 
 
 
-def is_boundary_list(array, arr_shape, x, y, z):
+def is_boundary_list(array: list, arr_shape: list, x: int, y: int, z: int):
     value = array[x][y][z]
     if x * y * z == 0 or x == arr_shape[0] - 1 or y == arr_shape[1] - 1 or z == arr_shape[2] - 1:
         return True
