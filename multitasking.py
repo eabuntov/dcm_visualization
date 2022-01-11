@@ -3,7 +3,7 @@ import multiprocessing
 import numpy
 
 
-def process_3Dimage_single(image3D: numpy.ndarray, img_shape: list) -> dict:
+def process_3Dimage_single(image3D: numpy.ndarray, img_shape: list, pixel_spacing: list) -> dict:
     channels = {}
     for i in range(img_shape[0]):
         print(i)
@@ -12,7 +12,7 @@ def process_3Dimage_single(image3D: numpy.ndarray, img_shape: list) -> dict:
                 value = image3D[i, j, k]
                 if value > 0 and is_boundary(image3D, img_shape, i, j, k):
                     if value in channels.keys():
-                        channels[value].append([i, j, k])
+                        channels[value].append([i, j * pixel_spacing[0], k * pixel_spacing[1]])
                     else:
                         channels[value] = []
     return channels
